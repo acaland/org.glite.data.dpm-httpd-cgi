@@ -1,0 +1,17 @@
+;
+; INI Template file for the object "Component" called "org.glite.data.dpm-httpd-cgi"
+;
+
+[Component-org.glite.data.dpm-httpd-cgi]
+vendor = None
+description = DPM HTTP CGI
+repository = http://eticssoft.web.cern.ch/eticssoft/repository/
+packageName = glite-data-dpm-httpd-cgi
+vcsroot = :pserver:anonymous@glite.cvs.cern.ch:/cvs/glite
+licenceType = GPL
+download = None
+homepage = None
+
+[Parent]
+Subsystem = org.glite.data
+

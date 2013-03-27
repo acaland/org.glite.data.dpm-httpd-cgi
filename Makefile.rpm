@@ -1,0 +1,52 @@
+include VERSION
+
+PACKAGE=DPM-httpd-cgi
+VPACKAGE=$(PACKAGE)-$(VERSION)
+ifndef RELEASE_SUFFIX
+RELEASE_SUFFIX=sec.$(shell ./get-platform-os)
+endif
+
+rpm: rpmbuild RPMS
+	cd rpmbuild; rpmbuild --define "_topdir $(PWD)/rpmbuild" -ba SPECS/$(VPACKAGE).spec
+	mv rpmbuild/SRPMS/*.rpm RPMS/
+	mv rpmbuild/RPMS/*/*.rpm RPMS/
+
+rpmbuild: tgz/$(VPACKAGE).tar.gz
+	mkdir -p rpmbuild/BUILD
+	mkdir -p rpmbuild/RPMS
+	mkdir -p rpmbuild/SRPMS
+	mkdir -p rpmbuild/SOURCES
+	cp tgz/$(VPACKAGE).tar.gz rpmbuild/SOURCES/
+	mkdir -p rpmbuild/SPECS
+	sed -e  's/@VERSION@/$(VERSION)/g; s/@RELEASE@/$(RELEASE)/g; s/@RELEASE.SUFFIX@/$(RELEASE_SUFFIX)/g;' \
+		$(PACKAGE).template.spec >rpmbuild/SPECS/$(VPACKAGE).spec
+
+RPMS:
+	mkdir -p RPMS
+
+SOURCES  = AUTHORS README VERSION $(wildcard *.c) $(wildcard *.h)
+SOURCES += configure.ac Makefile.am
+AUTOTOOLS = configure Makefile.in install-sh config.sub config.guess missing depcomp ltmain.sh aclocal.m4
+
+tgz/$(VPACKAGE).tar.gz: configure tgz
+	mkdir -p $(VPACKAGE)
+	cp -ur  $(SOURCES) $(AUTOTOOLS) $(VPACKAGE)/ 
+	find $(VPACKAGE)/ -name CVS -print0 | xargs -0 rm -rf 
+	tar -czf tgz/$(VPACKAGE).tar.gz $(VPACKAGE)
+	rm -rf $(VPACKAGE)
+
+tgz:
+	mkdir -p tgz
+
+configure Makefile.in Makefile: configure.ac Makefile.am
+	aclocal
+	libtoolize --force
+	automake --foreign --add-missing --copy
+	autoconf
+
+clean:
+	rm -rf rpmbuild autom4te.cache $(AUTOTOOLS)
+
+distclean: clean
+	rm -rf tgz RPMS
+

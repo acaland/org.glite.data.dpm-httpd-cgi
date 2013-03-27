@@ -1,0 +1,43 @@
+*** Release glite-data-dpm-httpd-cgi_R_1_3_2_3 2010-04-02
+
+	o add EGEE license/copyright
+
+*** Release glite-data-dpm-httpd-cgi_R_1_3_2_2 2010-03-29
+
+	o change dependency from DPM-client to dpm-libs
+
+*** Release glite-data-dpm-httpd-cgi_R_1_3_2_1 2009-09-22
+
+	o Fixed: Bug 55777: Use lifetime value passed to set_signature(),
+          allowing a longer lifetime for PUT/POST requests than GET requests.
+
+*** Release glite-data-dpm-httpd-cgi_R_1_3_1_2 2009-04-03
+    
+    (ETICS locking)
+
+*** Release glite-data-dpm-httpd-cgi_R_1_3_1_1 2009-04-03
+
+	o Fixed: write permission check was used in read case (bracket error)
+	o Fixed: code assumed always VOMS proxies and used 'wrong' group
+      mapping ( used pointer instead of *pointer)
+
+*** Release glite-data-dpm-httpd-cgi_R_1_3_0_2 2008-10-20
+
+	o Fixes #42623: DM custom packager creates rpms with invalid name
+
+*** Release glite-data-dpm-httpd-cgi_R_1_3_0_1 2007-12-01
+
+	o fixing RPM dependencies for bug#31806
+    o severe fix for security: a dpm session has to be established after the
+      client ID is set otherwise https cgi script keeps root permissions for
+      directory creation
+
+*** Release glite-data-dpm-httpd-cgi_R_1_2_1_1 2007-10-15
+
+	o /opt/glite -> /opt/lcg
+    o x86_64 build and runtime fixes
+
+*** Release glite-data-dpm-httpd-cgi_R_1_2_0_1 2007-09-27
+    
+    o First public release.
+

@@ -1,0 +1,17 @@
+<https_dpm_redirector_cgi> is a CGI script to be run in an APACHE web server
+using the mod_gridsite module for certificate and VOMS based authentication.
+
+It implements GET requests to read & write files via HTTPS running on the DPM
+head node. 
+The script verifies the permissions of a request for the specified file/directory and
+a) returns a browsable HTML page for directories
+b) returns a redirection URL via HTTP containing a token and a signature
+   targeting to the DPM disk server keeping the desired file. The disk server
+   veryfies the validity of the presented token and evt. grants access to the
+   stored DPM file on that node via HTTP access. The default lifetime of such a
+   token is currently 10s.
+
+The key used for signing is taken from "/opt/lcg/etc/dpm/https/keystore/key.pem". 
+The redirection target port is port http:777 or https:884 if the initial contact 
+was made via https:883.
+
